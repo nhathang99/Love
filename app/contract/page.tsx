@@ -7,9 +7,8 @@ import styles from "../styles/Contract.module.css";
 
 export default function ContractLove() {
   const router = useRouter();
-  const [pdfKey, setPdfKey] = useState(Date.now()); // Dynamic key to avoid cache
+  const [pdfKey, setPdfKey] = useState(Date.now());
 
-  // Force reload PDF with delay to ensure DOM is ready
   useEffect(() => {
     const timer = setTimeout(() => {
       setPdfKey(Date.now());
@@ -17,8 +16,13 @@ export default function ContractLove() {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleBackClick = (): void => {
+  const handleBackClick = () => {
     router.push("/");
+  };
+
+  const handleDownloadClick = () => {
+    // Optional: Add analytics or logging here
+    window.location.href = "/contract.pdf"; // Fallback for download
   };
 
   return (
@@ -27,18 +31,14 @@ export default function ContractLove() {
         <title>Love Contract</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      {/* Trái tim rơi */}
-      <div className={styles.heart}></div>
-      <div className={styles.heart}></div>
-      <div className={styles.heart}></div>
-      <div className={styles.heart}></div>
-      <div className={styles.heart}></div>
-      {/* Lấp lánh */}
-      <div className={styles.sparkle}></div>
-      <div className={styles.sparkle}></div>
-      <div className={styles.sparkle}></div>
-      <div className={styles.sparkle}></div>
-      <div className={styles.sparkle}></div>
+      {/* Falling hearts */}
+      {Array.from({ length: 5 }).map((_, index) => (
+        <div key={index} className={styles.heart}></div>
+      ))}
+      {/* Sparkles */}
+      {Array.from({ length: 5 }).map((_, index) => (
+        <div key={index} className={styles.sparkle}></div>
+      ))}
       <div className={styles.content}>
         <h1 className={styles.title}>
           I hope you’ll sign the contract, amor ❤️
@@ -53,16 +53,24 @@ export default function ContractLove() {
           >
             <p className={styles.fallback}>
               Your browser does not support PDFs.{" "}
-              <a href="/contract.pdf" download className={styles.fallbackLink}>
+              <a
+                href="/contract.pdf"
+                download
+                className={styles.fallbackLink}
+                onClick={handleDownloadClick}
+              >
                 Download Contract
               </a>
             </p>
           </object>
         </div>
         <div className={styles.buttonContainer}>
-          <a href="/contract.pdf" download className={styles.downloadButton}>
+          <button
+            onClick={handleDownloadClick}
+            className={styles.downloadButton}
+          >
             Download Contract
-          </a>
+          </button>
           <button onClick={handleBackClick} className={styles.backButton}>
             Back to Home
           </button>
