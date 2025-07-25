@@ -9,6 +9,7 @@ export default function ContractLove() {
   const router = useRouter();
   const [pdfKey, setPdfKey] = useState(Date.now());
 
+  // Refresh PDF key to avoid caching
   useEffect(() => {
     const timer = setTimeout(() => {
       setPdfKey(Date.now());
@@ -21,8 +22,13 @@ export default function ContractLove() {
   };
 
   const handleDownloadClick = () => {
-    // Optional: Add analytics or logging here
-    window.location.href = "/contract.pdf"; // Fallback for download
+    // Fallback for download
+    const link = document.createElement("a");
+    link.href = "/contract.pdf";
+    link.download = "contract.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -33,36 +39,33 @@ export default function ContractLove() {
       </Head>
       {/* Falling hearts */}
       {Array.from({ length: 5 }).map((_, index) => (
-        <div key={index} className={styles.heart}></div>
+        <div key={`heart-${index}`} className={styles.heart} />
       ))}
       {/* Sparkles */}
       {Array.from({ length: 5 }).map((_, index) => (
-        <div key={index} className={styles.sparkle}></div>
+        <div key={`sparkle-${index}`} className={styles.sparkle} />
       ))}
       <div className={styles.content}>
         <h1 className={styles.title}>
           I hope you’ll sign the contract, amor ❤️
         </h1>
         <div className={styles.pdfContainer}>
-          <object
+          <iframe
             key={pdfKey}
-            data={`/contract.pdf?t=${pdfKey}`}
-            type="application/pdf"
+            src={`/contract.pdf?t=${pdfKey}#toolbar=0`}
             className={styles.pdfViewer}
             title="Love Contract PDF"
           >
             <p className={styles.fallback}>
               Your browser does not support PDFs.{" "}
-              <a
-                href="/contract.pdf"
-                download
-                className={styles.fallbackLink}
+              <button
                 onClick={handleDownloadClick}
+                className={styles.fallbackLink}
               >
                 Download Contract
-              </a>
+              </button>
             </p>
-          </object>
+          </iframe>
         </div>
         <div className={styles.buttonContainer}>
           <button
