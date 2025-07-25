@@ -1,0 +1,182 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FFE6F0 0%, #EDE9FE 50%, #F472B6 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.heart {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(244, 114, 182, 0.7)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+  background-size: cover;
+  animation: fall 6s linear infinite;
+  z-index: 0;
+}
+
+.heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+.heart:nth-child(2) { left: 30%; animation-delay: 1s; }
+.heart:nth-child(3) { left: 50%; animation-delay: 2s; }
+.heart:nth-child(4) { left: 70%; animation-delay: 3s; }
+.heart:nth-child(5) { left: 90%; animation-delay: 4s; }
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: sparkle 3s infinite;
+  z-index: 0;
+}
+
+.sparkle:nth-child(6) { top: 20%; left: 15%; animation-delay: 0s; }
+.sparkle:nth-child(7) { top: 40%; left: 35%; animation-delay: 0.5s; }
+.sparkle:nth-child(8) { top: 60%; left: 55%; animation-delay: 1s; }
+.sparkle:nth-child(9) { top: 30%; left: 75%; animation-delay: 1.5s; }
+.sparkle:nth-child(10) { top: 50%; left: 95%; animation-delay: 2s; }
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.5); }
+  50% { opacity: 0.8; transform: scale(1.2); }
+}
+
+.content {
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  color: #D81B60;
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.pdfContainer {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.pdfViewer {
+  width: 100%;
+  height: 500px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: transparent; /* Tránh trắng tinh khi load */
+  min-height: 250px; /* Đảm bảo không collapse */
+}
+
+.fallback {
+  color: #D81B60;
+  font-size: 16px;
+  text-align: center;
+  padding: 16px;
+}
+
+.fallback a {
+  color: #EC4899;
+  text-decoration: underline;
+}
+
+.fallback a:hover {
+  color: #DB2777;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.downloadButton {
+  display: inline-block;
+  background-color: #EC4899;
+  color: #FFFFFF;
+  padding: 12px 30px;
+  border-radius: 4px;
+  font-size: 16px;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 8px rgba(236, 72, 153, 0.3);
+}
+
+.downloadButton:hover {
+  background-color: #DB2777;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(236, 72, 153, 0.4);
+}
+
+.backButton {
+  background-color: #EC4899;
+  color: #FFFFFF;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 8px rgba(236, 72, 153, 0.3);
+}
+
+.backButton:hover {
+  background-color: #DB2777;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(236, 72, 153, 0.4);
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+  .pdfViewer {
+    height: 250px;
+    min-height: 200px;
+  }
+  .buttonContainer {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .downloadButton,
+  .backButton {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+  .heart {
+    width: 15px;
+    height: 15px;
+  }
+  .sparkle {
+    width: 6px;
+    height: 6px;
+  }
+}
